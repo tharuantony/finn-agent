@@ -30,7 +30,7 @@ python -m finn.main run
 git clone https://github.com/<your-username>/finn-agent.git
 cd finn-agent
 py -m venv .venv
-.venv\Scripts\Activate.ps1         # if blocked: Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.venv\Scripts\Activate.ps1         
 pip install -r requirements.txt
 python -m finn.main run
 ```
@@ -55,29 +55,9 @@ From any other e-mail account send:
 
 The reply arrives in the same thread within about 30–60 seconds (check spam if not).
 
-**Expected result (31.12.2027):**
-
-| Contract | Covenant | Plan | Threshold | Headroom | |
-|---|---|---|---|---|---|
-| V1 Sparkasse | no financial covenants | – | – | – | – |
-| V2 Förderbank | Economic equity ratio | 34.32 % | ≥ 27.5 % | 6.82 pp | ✅ |
-| V3 Landesbank | DSCR | 1.56 | ≥ 1.30 | 0.26 | ✅ |
-| V4 Syndicated loan | Equity ratio | 30.7 % | ≥ 30.0 % | 0.7 pp | ⚠️ tight |
-| V4 Syndicated loan | Dynamic leverage | 3.37x | ≤ 3.50x | 0.13 | ⚠️ tight |
-
-Also try: a mail without attachment, a broken Excel file, or a modified plan.
-
----
-
-## Other commands
-
-| Command | Purpose |
-|---|---|
-| `python -m finn.main check samples/Wirtschaftsplan_2027.xlsx` | Result in the terminal, no e-mail |
-| `python -m pytest -q` | Run the 19 tests |
 
 ## How it works
 
 `finn/mail_io.py` (IMAP/SMTP) → `finn/contracts.py` (reviewed covenant register `covenants.json`, every quote verified in the PDF) → `finn/plan_reader.py` (Excel with cell references and consistency checks) → `finn/calc.py` (calculation per contract definition) → `finn/report.py` (reply mail). The LLM (`finn/llm.py`, optional) only writes text. Assumptions and design decisions: [NOTE.md](NOTE.md).
 
-All data is synthetic.
+
