@@ -11,8 +11,7 @@ calculation path. **All numbers are calculated in Python code, not by the LLM.**
 
 ## 1. Start Finn
 
-Requires **Python 3.10+** (https://www.python.org/downloads/; on Windows tick *"Add Python to PATH"*).
-
+Requires **Python 3.10+** .
 ### macOS / Linux (Terminal) or Windows (Git Bash)
 
 ```bash
