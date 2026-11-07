@@ -1,0 +1,140 @@
+{
+  "_comment": "Reviewed covenant register. Created once from the four contracts (LLM-assisted extraction via scripts/extract_covenants.py, then checked by a human). Every quote is verified against the PDF text at runtime; the page number is determined automatically.",
+  "reviewed_by": "Tharu Antony",
+  "reviewed_on": "2026-11-07",
+  "contracts": [
+    {
+      "id": "V1",
+      "file": "Vertrag_1_Sparkasse_Investitionsdarlehen.pdf",
+      "lender": "Sparkasse Musterstadt",
+      "title": "Investitionsdarlehen Nr. 4471 203 118 (EUR 25,0 Mio.)",
+      "plan_loan_label": "Investitionsdarlehen Sparkasse",
+      "has_covenants": false,
+      "no_covenant_reason": "Der Vertrag enthält keine Financial Covenants. Die in der Präambel genannten Kennzahlen (EK-Quote 28,4 %, dyn. Verschuldungsgrad 2,9 zum 31.12.2019) beschreiben nur die Grundlage der Kreditentscheidung und begründen keine Einhaltungspflicht. Besicherung erfolgt über die Ausfallbürgschaft der Stadt (§ 10).",
+      "evidence": [
+        {"ref": "Präambel", "quote": "bilanzielle Eigenkapitalquote von 28,4 % und einen dynamischen Verschuldungsgrad"},
+        {"ref": "§ 10 Abs. 1", "quote": "übernimmt die Stadt Musterstadt eine selbstschuldnerische Ausfallbürgschaft"}
+      ],
+      "covenants": []
+    },
+    {
+      "id": "V2",
+      "file": "Vertrag_2_Foerderbank_Foerderdarlehen.pdf",
+      "lender": "Förderbank Musterland",
+      "title": "Förderdarlehen Nr. FD-2022-08817",
+      "plan_loan_label": "Förderdarlehen Förderbank",
+      "has_covenants": true,
+      "covenants": [
+        {
+          "key": "V2_WEKQ",
+          "name": "Wirtschaftliche Eigenkapitalquote",
+          "calc": "economic_equity_ratio",
+          "params": {"sonderposten_share": "0.5"},
+          "operator": ">=",
+          "threshold": "27.5",
+          "unit": "%",
+          "decimals": 2,
+          "rounding_rule_in_contract": false,
+          "definition": "(Eigenkapital gem. § 266 Abs. 3 A HGB + 50 % der Sonderposten) / Bilanzsumme. Gesellschafterdarlehen und Rückstellungen zählen nicht dazu.",
+          "sources": [
+            {"ref": "§ 13 Abs. 1", "role": "Grenzwert", "quote": "eine Wirtschaftliche Eigenkapitalquote von mindestens 27,5 % einzuhalten"},
+            {"ref": "§ 1 Abs. 1 „Wirtschaftliches Eigenkapital“", "role": "Definition", "quote": "bezeichnet das Eigenkapital zuzüglich 50 % (fünfzig Prozent) der Sonderposten"},
+            {"ref": "§ 1 Abs. 1 „Wirtschaftliches Eigenkapital“", "role": "Ausschluss", "quote": "Gesellschafterdarlehen, Rückstellungen und sonstige Fremdkapitalpositionen werden dem Wirtschaftlichen Eigenkapital nicht zugerechnet"},
+            {"ref": "§ 1 Abs. 1 „Wirtschaftliche Eigenkapitalquote“", "role": "Definition", "quote": "Verhältnis des Wirtschaftlichen Eigenkapitals zur Bilanzsumme"}
+          ],
+          "plan_basis_note": {"ref": "§ 13 Abs. 3", "text": "Eine Unterschreitung auf Planbasis führt zu Gesprächen über Maßnahmen, ist aber für sich kein Kündigungsgrund.", "quote": "Eine solche Vorschau begründet für sich genommen keinen Kündigungsgrund"}
+        }
+      ]
+    },
+    {
+      "id": "V3",
+      "file": "Vertrag_3_Landesbank_Investitionsdarlehen.pdf",
+      "lender": "Landesbank Mittelland",
+      "title": "Investitionsdarlehen Nr. LBM-INV-2025-0412 (Tranchen A und B)",
+      "plan_loan_label": "Investitionsdarlehen Landesbank",
+      "has_covenants": true,
+      "covenants": [
+        {
+          "key": "V3_DSCR",
+          "name": "Schuldendienstdeckungsgrad (DSCR)",
+          "calc": "dscr",
+          "params": {},
+          "operator": ">=",
+          "threshold": "1.30",
+          "unit": "",
+          "decimals": 2,
+          "rounding_rule_in_contract": true,
+          "definition": "(EBITDA − Ertragsteuern) / Schuldendienst. Schuldendienst = Zinsaufwand für Finanzverbindlichkeiten (ohne Aufzinsung von Rückstellungen) + planmäßige Tilgungen (ohne Sondertilgungen). Gesellschafterdarlehen zählen trotz Rangrücktritt zu den Finanzverbindlichkeiten.",
+          "sources": [
+            {"ref": "§ 13 Abs. 1", "role": "Grenzwert", "quote": "einen Schuldendienstdeckungsgrad von mindestens 1,30 einzuhalten"},
+            {"ref": "Anlage 3 Abs. 6", "role": "Formel", "quote": "EBITDA abzüglich Ertragsteuern (Zähler)"},
+            {"ref": "Anlage 3 Abs. 2", "role": "Definition EBITDA", "quote": "zuzüglich der Steuern vom Einkommen und vom Ertrag"},
+            {"ref": "Anlage 3 Abs. 3", "role": "Definition Finanzverbindlichkeiten", "quote": "unabhängig davon, ob für diese Darlehen ein Rangrücktritt vereinbart ist"},
+            {"ref": "Anlage 3 Abs. 4 lit. a", "role": "Ausschluss", "quote": "Aufzinsung von Rückstellungen (insbesondere Pensionsrückstellungen) sind nicht einzubeziehen"},
+            {"ref": "Anlage 3 Abs. 4 lit. b", "role": "Ausschluss", "quote": "Nicht einzubeziehen sind freiwillige Sondertilgungen"},
+            {"ref": "Anlage 3 Abs. 6", "role": "Rundung", "quote": "auf zwei Nachkommastellen kaufmännisch zu runden"},
+            {"ref": "Anlage 3 Abs. 7", "role": "Planbasis", "quote": "sind die Planwerte des Wirtschaftsplans"}
+          ],
+          "self_test": {"ref": "Anlage 3 Abs. 8", "ebitda": "20000", "taxes": "1500", "interest": "3000", "scheduled_repayments": "9000", "expected": "1.54"},
+          "plan_basis_note": {"ref": "§ 13 Abs. 3", "text": "Liegt der Plan-DSCR unter 1,30, muss die Gesellschaft der Bank innerhalb von 30 Tagen Maßnahmen darlegen.", "quote": "innerhalb von 30 Tagen darlegen"}
+        }
+      ]
+    },
+    {
+      "id": "V4",
+      "file": "Vertrag_4_Konsortialkredit.pdf",
+      "lender": "Bankenkonsortium (Agent: Weserland Bank AG)",
+      "title": "Konsortialkredit vom 30.11.2023 (EUR 64,0 Mio.)",
+      "plan_loan_label": "Konsortialkredit",
+      "has_covenants": true,
+      "covenants": [
+        {
+          "key": "V4_EKQ",
+          "name": "Eigenkapitalquote",
+          "calc": "equity_ratio",
+          "params": {},
+          "operator": ">=",
+          "threshold": "30.0",
+          "unit": "%",
+          "decimals": 1,
+          "rounding_rule_in_contract": true,
+          "definition": "Bilanzielles Eigenkapital gem. § 266 Abs. 3 A HGB / Bilanzsumme. Sonderposten, Rückstellungen und Gesellschafterdarlehen sind kein Eigenkapital.",
+          "sources": [
+            {"ref": "§ 14 Abs. 1 lit. a", "role": "Grenzwert", "quote": "die Eigenkapitalquote zu jedem Prüfungsstichtag nicht weniger als 30,0 % beträgt"},
+            {"ref": "§ 1 Abs. 1 „Eigenkapital“", "role": "Ausschluss", "quote": "Rückstellungen und Gesellschafterdarlehen sind nicht Teil des Eigenkapitals"},
+            {"ref": "§ 1 Abs. 1 „Eigenkapitalquote“", "role": "Definition", "quote": "Verhältnis des Eigenkapitals zur Bilanzsumme"},
+            {"ref": "§ 14 Abs. 2", "role": "Rundung", "quote": "Die Eigenkapitalquote wird auf eine Nachkommastelle"}
+          ],
+          "plan_basis_note": {"ref": "§ 14 Abs. 3", "text": "Die Planberechnung dient der Frühwarnung; eine Abweichung auf Planbasis ist kein Kündigungsgrund, die Mehrheitskreditgeber können aber ein Gespräch über Gegenmaßnahmen verlangen. Eine Heilung durch EK-Zuführung nach dem Stichtag ist ausgeschlossen (§ 14 Abs. 4).", "quote": "auf Planbasis begründet keinen Kündigungsgrund"}
+        },
+        {
+          "key": "V4_DVG",
+          "name": "Dynamischer Verschuldungsgrad",
+          "calc": "net_leverage",
+          "params": {"exclude_subordinated_shareholder_loans": true},
+          "operator": "<=",
+          "threshold": "3.50",
+          "unit": "x",
+          "decimals": 2,
+          "rounding_rule_in_contract": true,
+          "definition": "Nettofinanzverbindlichkeiten (Finanzverbindlichkeiten ohne nachrangige Gesellschafterdarlehen − frei verfügbare liquide Mittel) zum Stichtag / EBITDA des Geschäftsjahres.",
+          "sources": [
+            {"ref": "§ 14 Abs. 1 lit. b", "role": "Grenzwert", "quote": "für jeden Prüfungszeitraum nicht mehr als 3,50"},
+            {"ref": "§ 1 Abs. 1 „Dynamischer Verschuldungsgrad“", "role": "Definition", "quote": "der Nettofinanzverbindlichkeiten zum letzten Tag des Prüfungszeitraums zum EBITDA"},
+            {"ref": "§ 1 Abs. 1 „Finanzverbindlichkeiten“", "role": "Ausschluss", "quote": "jedoch jeweils mit Ausnahme von Nachrangigen Gesellschafterdarlehen"},
+            {"ref": "§ 1 Abs. 1 „Nachrangiges Gesellschafterdarlehen“", "role": "Definition", "quote": "qualifizierter Rangrücktritt im Sinne von § 39 Absatz 2 InsO"},
+            {"ref": "§ 1 Abs. 1 „Liquide Mittel“", "role": "Definition", "quote": "soweit diese frei verfügbar und nicht verpfändet"},
+            {"ref": "§ 1 Abs. 1 „EBITDA“", "role": "Definition EBITDA", "quote": "Erträge aus der Auflösung von Sonderposten werden nicht bereinigt"},
+            {"ref": "§ 14 Abs. 2", "role": "Rundung", "quote": "der Dynamische Verschuldungsgrad auf zwei Nachkommastellen kaufmännisch gerundet"}
+          ],
+          "margin_grid": {
+            "ref": "§ 6 Abs. 3",
+            "quote": "Margenraster",
+            "steps": [{"max": "2.50", "margin": "0.95"}, {"max": "3.00", "margin": "1.10"}, {"max": null, "margin": "1.25"}]
+          },
+          "plan_basis_note": {"ref": "§ 14 Abs. 3", "text": "Die Planberechnung dient der Frühwarnung; eine Abweichung auf Planbasis ist kein Kündigungsgrund, die Mehrheitskreditgeber können aber ein Gespräch über Gegenmaßnahmen verlangen.", "quote": "auf Planbasis begründet keinen Kündigungsgrund"}
+        }
+      ]
+    }
+  ]
+}
