@@ -23,7 +23,7 @@ STATE = ROOT / ".finn_state.json"
 
 
 def _load_env():
-    env = ROOT / ".env"
+    env = ROOT / "example.env"
     if env.exists():
         for line in env.read_text(encoding="utf-8").splitlines():
             line = line.strip()
