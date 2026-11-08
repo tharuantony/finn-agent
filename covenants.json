@@ -1,5 +1,5 @@
 {
-  "_comment": "Reviewed covenant register. Created once from the four contracts (LLM-assisted extraction via scripts/extract_covenants.py, then checked by a human). Every quote is verified against the PDF text at runtime; the page number is determined automatically.",
+  "_comment": "Reviewed covenant register. Created once from the four contracts (LLM-assisted extraction via scripts/extract_covenants.py). Every quote is verified against the PDF text at runtime; the page number is determined automatically.",
   "reviewed_by": "Tharu Antony",
   "reviewed_on": "2026-11-07",
   "contracts": [
